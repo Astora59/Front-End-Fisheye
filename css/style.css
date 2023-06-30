@@ -42,9 +42,42 @@ h1 {
 .photographer_section article h2 {
     color: #D3573C;
     font-size: 36px;
+    margin-bottom: unset;
+    /*added*/cursor: pointer;
+    
 }
 
 .photographer_section article img {
     height: 200px;
     width: 200px;
+    /*added*/cursor: pointer;
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+.cityAndCountry-style {
+    color: #901C1C;
+    font-weight: 700;
+}
+
+.tagline-style {
+    font-weight: bold;
+    margin-bottom: unset;
+    margin-top: unset;
+    
+}
+
+.price-style {
+    color: grey;
+}
+
+
+
+/*/faire un texte underline none sur a*/
+article .photographer-link-style {
+    text-decoration: none;
+}
+
+.clickable-part {
+    justify-content: center;
 }

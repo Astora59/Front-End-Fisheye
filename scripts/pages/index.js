@@ -1,7 +1,20 @@
     async function getPhotographers() {
+        const dataPhotographers = await fetch('/data/photographers.json');
+        const infoProfilePhotographers = await dataPhotographers.json();
+        console.log(infoProfilePhotographers);
+        
+        return infoProfilePhotographers;
+
+        /*class PhotographersProfile {
+            constructor(dataPhotographers) {
+                this.name = dataPhotographers.name
+                this.id = dataPhotographers.id
+                this.city = dataPhotographers.city
+            }
+        }*/
         // Ceci est un exemple de données pour avoir un affichage de photographes de test dès le démarrage du projet, 
         // mais il sera à remplacer avec une requête sur le fichier JSON en utilisant "fetch".
-        let photographers = [
+        /*let photographers = [
             {
                 "name": "Ma data test",
                 "id": 1,
@@ -23,16 +36,17 @@
         ]
         // et bien retourner le tableau photographers seulement une fois récupéré
         return ({
-            photographers: [...photographers, ...photographers, ...photographers]})
+            photographers: [...photographers, ...photographers, ...photographers]})*/
     }
 
     async function displayData(photographers) {
         const photographersSection = document.querySelector(".photographer_section");
-
+        let tabIndex = 2
         photographers.forEach((photographer) => {
-            const photographerModel = photographerTemplate(photographer);
+            const photographerModel = photographerTemplate(photographer, tabIndex);
             const userCardDOM = photographerModel.getUserCardDOM();
             photographersSection.appendChild(userCardDOM);
+            tabIndex++
         });
     }
 
