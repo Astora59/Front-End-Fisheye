@@ -7,7 +7,7 @@ function photographerTemplate(data, tabIndex) {
         const article = document.createElement( 'article' );
         const img = document.createElement( 'img' );
         img.setAttribute("src", picture)
-        //img.setAttribute("alt", "Picture photographer profile")
+        img.setAttribute("alt", "profile picture photographers Fisheye")
         const h2 = document.createElement( 'h2' );
         article.appendChild(img);
         article.appendChild(h2);
@@ -39,19 +39,16 @@ function photographerTemplate(data, tabIndex) {
         cityAndCountry.textContent = city + ", " + country;
         article.appendChild(cityAndCountry);
         cityAndCountry.classList.add("cityAndCountry-style");
-        cityAndCountry.setAttribute("alt", "city and country photographer Fisheye")
         //affiche le motto
         const taglinePhotographer = document.createElement('p');
         taglinePhotographer.textContent = tagline;
         article.appendChild(taglinePhotographer);
         taglinePhotographer.classList.add("tagline-style")
-        taglinePhotographer.setAttribute("alt", "tagline photographer Fisheye")
         //affiche le prix
         const pricePhotographer = document.createElement('p');
         pricePhotographer.textContent = price + "€/jour";
         article.appendChild(pricePhotographer);
         pricePhotographer.classList.add("price-style")
-        pricePhotographer.setAttribute("alt", "price photographer profile")
         //tabindex à modifier
         article.setAttribute("tabindex", tabIndex)
         
@@ -59,6 +56,11 @@ function photographerTemplate(data, tabIndex) {
         
         return (article);
     }
-    return { name, picture, getUserCardDOM }
+
+    
+    function getProfilePhotographer() {
+        
+    }
+    return { name, picture, getUserCardDOM, getProfilePhotographer }
 }
 
