@@ -59,7 +59,18 @@ function photographerTemplate(data, tabIndex) {
 
     
     function getProfilePhotographer() {
-        
+        const photographersSection = document.querySelector(".photograph-header");
+        img.setAttribute("src", picture)
+        img.setAttribute("alt", "profile picture photographers Fisheye")
+        const h2 = document.createElement( 'h2' );
+        photographersSection.appendChild(img);
+        article.appendChild(h2);
+        h2.textContent = name;
+        console.log("h2")
+
+
+
+        return (photographersSection);
     }
     return { name, picture, getUserCardDOM, getProfilePhotographer }
 }
