@@ -81,6 +81,7 @@ h1 {
     grid-template-columns: 1fr 1fr 1fr;
     gap: 70px;
     margin-top: 100px;
+    
 }
 
 .photographer_section article {
@@ -106,6 +107,16 @@ h1 {
     border-radius: 100px;
     object-fit: cover;
     
+}
+
+.img-form {
+  display: flex;
+  height: 200px;
+  width: 200px;
+  border-radius: 100px;
+  object-fit: cover;
+  justify-content: flex-end;
+  align-self: flex-end;
 }
 
 .cityAndCountry-style {
@@ -144,4 +155,9 @@ article .photographer-link-style {
 
 .form-elements input {
     font-size: 30px;
+}
+
+.photograph-header {
+  display: flex;
+  justify-content: space-between;
 }
