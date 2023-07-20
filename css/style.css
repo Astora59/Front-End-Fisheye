@@ -159,5 +159,15 @@ article .photographer-link-style {
 
 .photograph-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 3%;
+  row-gap: 20px;
+  padding: 50px 100px;
+}
+
+
+.modal-text {
+  display: flex;
+  align-items: center;
 }

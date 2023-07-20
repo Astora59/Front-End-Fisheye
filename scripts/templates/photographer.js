@@ -54,7 +54,7 @@ function photographerTemplate(data, tabIndex) {
     async function getProfilePhotographer() {
       console.log("getProfilePhotographer called");
       const photographersSection = document.querySelector(".photograph-header");
-  
+    
       let img = document.createElement("img");
       img.src = picture;
       photographersSection.appendChild(img);
@@ -121,234 +121,96 @@ function photographerTemplate(data, tabIndex) {
     return { name, picture, getUserCardDOM, getProfilePhotographer, modalCreation };
   }
   
-/*function mediaFactory(data) {
-  const {photographerID, title, image, video, likes, id, date} = data;
-
-  const picture = `assets/photographers/${image}`;
-  const recorder = `assets/media/videos/${video}`;
-
-
-  const article = document.createElement('article')
-  const div = document.createElement('div')
-  const h2 = document.createElement('h2')
-  const i = document.createElement('i')
-  const divLikes = document.createElement('div')
-  const index = document.createElement('div')
-  const spanForLike = document.createElement('span')
-  const buttonLike = document.createElement('button')
-
-  function getVideo() {
-    const tape = document.createElement('video')
-    const source = document.createElement('source')
-
-    h2.textContent = title;
-    spanForLike.textContent = likes
-
-    i.setAttribute("class", "fa-solid fa-heart")
-    i.setAttribute("aria-label", "likes")
-    index.setAttribute("class", "lgthBox")
-
-
-    spanForLike.setAttribute("class", "numberLike_"+id)
-    divLikes.setAttribute("class", "containerMedia");
-    div.setAttribute("class", "titleMedia")
-    article.setAttribute("class", "openLightBox")
-
-    buttonLike.setAttribute("type", "button")
-    buttonLike.setAttribute("class", "buttonLike")
-
-    //au clic du bouton j'aime, il s'incrémente et s'ajoute au total de like
-    buttonLike.addEventListener("click", () => {
-      const sessionStorageLiked = JSON.parse(window.sessionStorage.getItem("liked"));
-
-    //récupère l'index de l'élément
-    const findIndexOfElement = sessionStorageLiked.findIndex(item => {
-      return item === id;
-    })
-
-    const actualTotalLikeOnMedia = parseInt(document.querySelector(".numberLike"))
-    
+  function mediaFactory(data) {
+    const { id, photographerId, title, image, video, date, price } = data
+    const { likes } = data
+    const imgSrc = `assets/photos/${photographerId}/${image}`
+    const vdoSrc = `assets/photos/${photographerId}/${video}`
+    const mediaSection = document.querySelector(".photographer_main")
   
+    const svgNs = 'http://www.w3.org/2000/svg'
+    // creation of elements
+    function getUserMediaDOM() {
+      const card = document.createElement('a')
+      card.setAttribute('class', 'card')
+      card.setAttribute('data-id', id)
+      if (image) {
+        const img = document.createElement('img')
+        img.setAttribute('src', imgSrc)
+        img.setAttribute('class', 'image')
+        img.setAttribute('alt', title)
+        img.classList.add('media')
+        img.setAttribute('tabindex', 0)
   
-  })
-
-
-  }
-
-}*/
-
-
-
-//modale : critères de validation
-
-
-
-//const loginForm = document.querySelector('.modal')
-
-
-/*loginForm.addEventListener('submit', (event)=> {
-  event.preventDefault(); //empêche l'envoi du formulaire par défaut
-  console.log(event.target.elements);
-  const {first, last, email} = event.target.elements; // permet de sélectionner tous les éléments qui concernent firstname et lastname, aucun autre, c'est la destructuration
-  const errorOnFirstnameAlreadyExist = document.querySelector("#first_error"); // va permettre la non répétition du texte d'erreur
-  let hasErrorOnForm = false; // condition générale qui permet que le formulaire ne s'envoie pas s'il y a un true quelque part
-  if (!lengthValidator(first.value, 2)) { // "si la fonction lengthvalidator n'est pas true (donc si firstnameForm plus petit que 2)"
-    hasErrorOnForm = true; 
-    first.classList.add('text-control--red'); //ajoute la classe text-control--red à la balise, sans l'utilisation de style inline 
-    //formData.insertAfter (pElement);
-    if (!errorOnFirstnameAlreadyExist) { //s'il y a une erreur et pas encore de message d'erreur
-      const errorMessage = createErrorElement(first.id, "Veuillez entrer 2 caractères ou plus pour le champ du prénom"); //création du message d'erreur
-      const containerInputFirstname = document.querySelector("#first"); //on déclare là où sera le message d'erreur
-      containerInputFirstname.parentElement.appendChild(errorMessage);
-    }
-    
-  }
-  else { //s'il n'y a aucune erreur
-   if(errorOnFirstnameAlreadyExist) { //s'il y a déjà ou pas de message d'erreur...
-    errorOnFirstnameAlreadyExist.remove(); //alors on retire et on s'arrête là
-   }
-   first.classList.remove('text-control--red'); //on enlève le style cadre rouge d'indication d'erreur
-  }
-
-  
-
-
-  const errorOnLastNameAlreadyExist = document.querySelector('#last_error');
-
-  if (!lengthValidator(last.value, 2)) {
-    hasErrorOnForm = true; 
-    last.classList.add('text-control--red');
-    if (!errorOnLastNameAlreadyExist) {
-      const errorMessage = createErrorElement(last.id, "Veuillez entrer 2 caractères ou plus pour le champ du nom");
-      const containerInputLastname = document.querySelector("#last");
-      containerInputLastname.parentElement.appendChild(errorMessage);
-    }
-  }
-  else {
-    if(errorOnLastNameAlreadyExist) {
-      errorOnLastNameAlreadyExist.remove();
-    }
-    
-    last.classList.remove('text-control--red');
-  }
-
-
-
-  const errorOnEmailAlreadyexist = document.querySelector('#email_error');
-    if (!emailRegex.test(email.value)) {
-      
-      // Si l'email n'est pas valide, affichage d'un message d'erreur
-      hasErrorOnForm = true;
-      email.classList.add('text-control--red');
-     if (!errorOnEmailAlreadyexist) {
-      const errorMessage = createErrorElement(email.id, "L'adresse email est invalide"); //création du message d'erreur
-      const containerInputEmail = document.querySelector("#email"); //on déclare là où sera le message d'erreur
-      containerInputEmail.parentElement.appendChild(errorMessage);
-     }
-    }
-    
-    else {
-      if(errorOnEmailAlreadyexist) {
-        errorOnEmailAlreadyexist.remove();
+        card.appendChild(img)
       }
-       
-      email.classList.remove('text-control--red');
+      if (video) {
+        const vdo = document.createElement('video')
+        vdo.setAttribute('src', vdoSrc)
+        vdo.setAttribute('type', 'video/mp4')
+        vdo.setAttribute('alt', title)
+        vdo.autoplay = false
+        vdo.controls = true
+        vdo.muted = false
+        vdo.classList.add('media')
+        vdo.setAttribute('tabindex', 0)
+        card.appendChild(vdo)
+      }
+      const cardFooter = document.createElement('div')
+      cardFooter.setAttribute('class', 'card_footer')
+      const h3 = document.createElement('h3')
+      h3.setAttribute('class', 'title')
+      h3.textContent = title
+      const likeCounter = document.createElement('div')
+      likeCounter.setAttribute('class', 'likeCount')
+      const p = document.createElement('p')
+      p.setAttribute('id', 'likes')
+      p.innerHTML = likes
+      const heart = document.createElement('i')
+      heart.setAttribute('class', 'far fa-heart')
+      heart.setAttribute('tabIndex', '0')
+      // like handler
+      heart.addEventListener('click', (e) => {
+        if (p.classList.contains('liked')) {
+          p.classList.remove('liked')
+          heart.classList.remove('liked')
+  
+          p.innerHTML = likes - 1
+        } else {
+          p.classList.add('liked')
+          heart.classList.add('liked')
+          p.innerHTML = likes + 1
+        }
+      })
+      // like handler keyboard controle
+      heart.addEventListener('keypress', (e) => {
+        switch (e.key) {
+          case 'Enter':
+            if (p.classList.contains('liked')) {
+              p.classList.remove('liked')
+              heart.classList.remove('liked')
+              p.innerHTML = likes - 1
+            } else {
+              p.classList.add('liked')
+              heart.classList.add('liked')
+              p.innerHTML = likes + 1
+            }
+            break
+  
+          default:
+            e.preventDefault()
+        }
+      })
+  
+      card.appendChild(cardFooter)
+      cardFooter.appendChild(h3)
+      cardFooter.appendChild(likeCounter)
+      likeCounter.appendChild(p)
+      likeCounter.appendChild(heart)
+  
+      return card
+      return mediaSection
     }
-
-
-
-
-  if(!hasErrorOnForm) {
-    
-    loginForm.style.display = "none";
-    const divConfirm = document.createElement("div");
-    divConfirm.classList.add('container-confirmation');
-    const confirmMessage = document.createElement("p");
-    confirmMessage.innerText = 'Merci pour votre participation';
-    const closeModalAfterConfirm = document.createElement("button");
-    closeModalAfterConfirm.innerText = 'Fermer';
-    closeModalAfterConfirm.classList.add('btn-submit');
-    closeModalAfterConfirm.addEventListener("click", closeModalWindow)
-    const modalBody = document.querySelector('.modal-body');
-    divConfirm.appendChild(confirmMessage);
-    divConfirm.appendChild(closeModalAfterConfirm);
-    modalBody.appendChild(divConfirm);
-    loginForm.reset();
+  
+    return { title, likes, getUserMediaDOM }
   }
-
-  
-
-
-});
-
-const lengthValidator = (string, length) => {
-  return string.length > length;
-}
-
-const createErrorElement = (id, errorMessage) => { 
-  const pElement = document.createElement("p");
-  pElement.setAttribute("id",id + "_error");
-  pElement.innerText = errorMessage;
-  pElement.classList.add('red-text');
-
-  return pElement;
-}
-
-//formData.insertAfter (pElement)
-
-
-
-
-//fonction pour vérification de la saisie d'une valeur numérique
-
- 
-    const validateQuantity = (quantity) => {
-      return parseInt(quantity) >= 0;
-    }
-
-    
-  
-  //vérification de la sélection d'un bouton radio 
- 
-  
-  
- 
-  
-const submitButton = document.querySelector(".btn-submit");*/
-
-// All factories
-
-//  photographer factory
-/*function photographerFactory(data) {
-  const { id, name, portrait, city, country, tagline, price } = data
-
-  const picture = `assets/photographers/${portrait}`
-  // creation of elements
-  function getUserCardDOM() {
-    const a = document.createElement('a')
-    a.setAttribute('href', `photographer.html?id=${id}`)
-    const article = document.createElement('article')
-    const img = document.createElement('img')
-    img.setAttribute('src', picture)
-    img.setAttribute('alt', name)
-    const h2 = document.createElement('h2')
-    h2.textContent = name
-    const h3 = document.createElement('h3')
-    h3.textContent = `${city}, ${country}`
-    const p = document.createElement('p')
-    p.textContent = tagline
-    const small = document.createElement('small')
-    small.textContent = `${price}€/jours`
-
-    a.appendChild(article)
-    article.appendChild(img)
-    article.appendChild(h2)
-    article.appendChild(h3)
-    article.appendChild(p)
-    article.appendChild(small)
-
-    return a
-  }
-  return { name, picture, getUserCardDOM }
-}
-*/

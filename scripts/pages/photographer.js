@@ -1,10 +1,17 @@
 async function getPhotographersPageData(id) {
   const dataPhotographers = await fetch("/data/photographers.json");
   const infoProfilePhotographers = await dataPhotographers.json();
-
   const infoProfilePhotograph = infoProfilePhotographers.photographers.find((value) => value.id == id);
 
   return infoProfilePhotograph;
+}
+
+async function getMediaData() {
+  const mediaDataPhotographers = await fetch("/data/photographers.json")
+  const infoMedia = await mediaDataPhotographers.json();
+  const findIdForMedia = infoMedia.photographers.find((value) => value.id == id);
+
+  return findIdForMedia;
 }
 
 async function displayPhotographerHeader(photographers) {
@@ -13,7 +20,15 @@ async function displayPhotographerHeader(photographers) {
   const photographerModel = photographerTemplate(photographers, tabIndex);
   console.log("photographerModel", photographerModel);
   await photographerModel.getProfilePhotographer();
+  await photographerModel.modalCreation();
 }
+
+
+async function displayMedia(media) {
+  const photographerMediaModel = mediaFactory(media, tabIndex);
+  await photographerMediaModel.getMediaData();
+}
+
 
 async function init() {
   // Récupère les datas des photographes
@@ -22,26 +37,18 @@ async function init() {
   let id = searchParams.get("id");
 
   const photographers = await getPhotographersPageData(id);
+  //const media = await getMediaData(id)
   console.log("init photographers", photographers);
   displayPhotographerHeader(photographers);
+  displayMedia(media)
 }
 
 init();
 
-const formElements = document.querySelector(".form-elements");
 
-const fields = [
-  { label: "Nom", type: "text" },
-  { label: "Email", type: "email" },
-  { label: "Message", type: "text" },
-];
 
-for (const field of fields) {
-  const label = document.createElement("label");
-  label.textContent = field.label;
-  formElements.appendChild(label);
+//logique de validation modal 
 
-  const input = document.createElement("input");
-  input.type = field.type;
-  formElements.appendChild(input);
+const lengthValidator = (string, length) => {
+  return string.length > length;
 }
