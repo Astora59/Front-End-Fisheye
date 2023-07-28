@@ -1,13 +1,13 @@
-function mediaFactory(data) {
+function mediaFactory(data, name) {
     const { id, photographerId, title, image, video, date, price } = data
     const { likes } = data
-    const imgSrc = `assets/photos/${photographerId}/${image}`
-    const vdoSrc = `assets/photos/${photographerId}/${video}`
+    const imgSrc = `assets/${name}/${image}`
+    const vdoSrc = `assets/${name}/${video}`
     const mediaSection = document.querySelector(".photographer_main")
   
     const svgNs = 'http://www.w3.org/2000/svg'
     // creation of elements
-    function getUserMediaDOM() {
+    function getMediaCardDOM() {
       const card = document.createElement('a')
       card.setAttribute('class', 'card')
       card.setAttribute('data-id', id)
@@ -89,5 +89,5 @@ function mediaFactory(data) {
       return mediaSection
     }
   
-    return { title, likes, getUserMediaDOM }
+    return { title, likes, getMediaCardDOM }
   }
