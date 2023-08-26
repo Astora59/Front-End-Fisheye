@@ -1,7 +1,6 @@
 
 function photographerTemplate(data, tabIndex) {
     const { name, portrait, id, tagline, city, country, price } = data;
-    console.log("data", data);
   
     const picture = `assets/photographers/${portrait}`;
   
@@ -60,7 +59,7 @@ function photographerTemplate(data, tabIndex) {
       img.src = picture;
       photoHeader.appendChild(img);
       img.setAttribute('class', 'photographer_section article img')
-
+      img.setAttribute('alt',name)
       const h2 = document.createElement("h2");
       h2.setAttribute("class", "photographer_Name_style")
       info.appendChild(h2);
@@ -99,7 +98,7 @@ function photographerTemplate(data, tabIndex) {
       const fields = [
         { label: "Nom", type: "text", for: "last", id: "last" },
         { label: "Email", type: "email", for:"email", id: "email" },
-        { label: "Message", type: "text" },
+        { label: "Message", type: "text", id: "message" },
       ];
     
       for (const field of fields) {
@@ -124,31 +123,45 @@ function photographerTemplate(data, tabIndex) {
   }
   
   // info fixed bot on profil factory
-function infoFactory(data) {
+function infoFactory(data, price) {
   const likesCount = data
+
+  
+  
 
   // creation of elements
   function getUserInfoDOM() {
     const info = document.createElement('div')
+    info.classList.add('photographer-info')
     const likes = document.createElement('p')
     const p = document.createElement('p')
+    p.textContent = price + "€/jour";
     const content = document.querySelectorAll('.fa-heart')
     // live incrementation
     content.forEach((e) => {
       e.addEventListener('click', () => {
         const likedContent = document.querySelectorAll('.fa-heart.liked')
+    
         likes.innerHTML = `${
           likesCount + likedContent.length
         }    <i class="fa-solid fa-heart"></i>`
       })
     })
 
-    likes.innerHTML = `${likesCount}    <i class="fa-solid fa-heart"></i>`
+  
 
+    likes.innerHTML = `${likesCount}    <i class="fa-solid fa-heart"></i>`
+    
     info.appendChild(likes)
     info.appendChild(p)
+    
     return info
+
+    
   }
+  
 
   return { likesCount, getUserInfoDOM }
 }
+
+

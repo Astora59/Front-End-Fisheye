@@ -8,9 +8,12 @@ function mediaFactory(data, name) {
     const svgNs = 'http://www.w3.org/2000/svg'
     // creation of elements
     function getMediaCardDOM() {
-      const card = document.createElement('a')
+      const card = document.createElement('div')
       card.setAttribute('class', 'card')
       card.setAttribute('data-id', id)
+      const linkForLightbox = document.createElement('a')
+      card.appendChild(linkForLightbox)
+      
       if (image) {
         const img = document.createElement('img')
         img.setAttribute('src', imgSrc)
@@ -18,8 +21,9 @@ function mediaFactory(data, name) {
         img.setAttribute('alt', title)
         img.classList.add('media')
         img.setAttribute('tabindex', 0)
-  
         card.appendChild(img)
+        linkForLightbox.setAttribute('href', imgSrc)
+        linkForLightbox.appendChild(img)
       }
       if (video) {
         const vdo = document.createElement('video')
@@ -32,7 +36,14 @@ function mediaFactory(data, name) {
         vdo.classList.add('media')
         vdo.setAttribute('tabindex', 0)
         card.appendChild(vdo)
+        linkForLightbox.setAttribute('href', vdoSrc)
+        linkForLightbox.appendChild(vdo)
+        
+        
+        
       }
+      
+      
       const cardFooter = document.createElement('div')
       cardFooter.setAttribute('class', 'card_footer')
       const h3 = document.createElement('h3')
@@ -51,12 +62,14 @@ function mediaFactory(data, name) {
         if (p.classList.contains('liked')) {
           p.classList.remove('liked')
           heart.classList.remove('liked')
+          heart.classList.remove('fa-solid')
   
-          p.innerHTML = likes - 1
+          p.innerHTML = likes
         } else {
           p.classList.add('liked')
           heart.classList.add('liked')
           p.innerHTML = likes + 1
+          heart.classList.add("fa-solid")
         }
       })
       // like handler keyboard controle
@@ -91,3 +104,8 @@ function mediaFactory(data, name) {
   
     return { title, likes, getMediaCardDOM }
   }
+
+    
+
+  
+  

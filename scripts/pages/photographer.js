@@ -18,49 +18,10 @@ async function getLikes(medias) {
   const likesCount = medias
     .map((item) => item.likes)
     .reduce((prev, curr) => prev + curr, 0)
-  const price = medias.map((item) => item.price)
-  return {
-    likesCount,
-    price,
-  }
+  return likesCount
 }
 
-function sortMedia(medias, sortBy) {
-  mainSection.innerHTML = ''
-  // sort by const 'sortBy'
-  if (sortBy === '1') {
-    medias.sort((a, b) => (a.likes < b.likes ? 1 : -1))
-    medias.forEach((media) => {
-      const mainModel = mediaFactory(media)
-      const userMediaDOM = mainModel.getUserMediaDOM()
-      mainSection.appendChild(userMediaDOM)
-    })
-  }
-  if (sortBy === '2') {
-    medias.sort((x, y) => {
-      const firstDate = new Date(x.date)
-      const SecondDate = new Date(y.date)
-
-      if (firstDate < SecondDate) return -1
-      if (firstDate > SecondDate) return 1
-      return 0
-    })
-    medias.forEach((media) => {
-      const mainModel = mediaFactory(media)
-      const userMediaDOM = mainModel.getUserMediaDOM()
-      mainSection.appendChild(userMediaDOM)
-    })
-  }
-  if (sortBy === '3') {
-    medias.sort((a, b) => a.title.localeCompare(b.title))
-    medias.forEach((media) => {
-      const mainModel = mediaFactory(media)
-      const userMediaDOM = mainModel.getUserMediaDOM()
-      mainSection.appendChild(userMediaDOM)
-    })
-  }
-}
-
+ 
 
 
 async function displayPhotographerHeader(photographers) {
@@ -71,25 +32,64 @@ async function displayPhotographerHeader(photographers) {
 }
 
 
- async function displayMedia(medias, photographerName) {
+
+
+
+ async function displayMedia(medias, photographerName, orderType = 'popularite') {
    const containerMedias = document.querySelector('.photographer_main')
-   console.log(containerMedias)
+  containerMedias.innerHTML = "";
+  console.log(medias)
+
+  switch (orderType) {
+    case "popularite":
+      medias.sort((a, b) => (a.likes < b.likes ? 1 : -1))
+      break; 
+    case "date":
+      medias.sort((x, y) => {
+        const firstDate = new Date(x.date)
+        const SecondDate = new Date(y.date)
+
+        if (firstDate < SecondDate) return -1
+        if (firstDate > SecondDate) return 1
+        return 0
+      })
+      break;
+    
+    case "title" :
+      medias.sort((a, b) => a.title.localeCompare(b.title))
+      break;
+  }
+
+
+
    medias.forEach(async (media) => {
      const photographerMediaModel = mediaFactory(media, photographerName);
      const mediaDOM = await photographerMediaModel.getMediaCardDOM();
      containerMedias.appendChild(mediaDOM)
+
   });
+
+  
+
+
   
  }
 
- async function displayLikeCounter(medias) {
+ 
+
+ async function displayLikeCounter(medias, price) {
   //console.log(medias)
   const infoSection = document.querySelector('.photograph-info')
-  console.log(infoSection)
-  const infoModel = infoFactory(medias)
+  const infoModel = infoFactory(medias, price)
   const userInfoDOM = infoModel.getUserInfoDOM()
   infoSection.appendChild(userInfoDOM)
 }
+
+
+
+
+ 
+
 
 async function init() {
   // Récupère les datas des photographes
@@ -101,7 +101,14 @@ async function init() {
   const likesCount = await getLikes(medias)
   displayPhotographerHeader(photographers);
   displayMedia(medias, photographers.name)
-  displayLikeCounter(likesCount)
+  //add event listener sort
+  const dropdownSelect = document.querySelector(".dropdown-select")
+  dropdownSelect.addEventListener("change", (e) => {
+    displayMedia(medias, photographers.name, orderType = "date")
+    
+  })
+
+  displayLikeCounter(likesCount, photographers.price)
 }
 
 init();

@@ -11,24 +11,24 @@
   </head>
   <body>
     <header>
-      <a href="/index.html"><img src="assets/images/logo.png" class="logo" /></a>
+      <a href="/index.html"><img src="assets/images/logo.png" class="logo" alt="logo fisheye" /></a>
     </header>
     <main id="main">
       <div class="photograph-header">
         <section class="photoHeader">
           <div class="info"></div>
-        <button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+        <button class="contact_button" onclick="displayModal()" aria-label="bouton contact photographe">Contactez-moi</button>
         </section>
       </div>
 
-      <div class="selector">
+      <div class="selector" aria-label="option mécanisme Trier">
         <span>Trier par :</span>
         <div class="select">
           <div class="dropdown">
             <button onclick="showDropdown()" class="dropbtn">
               <em class="fa-solid fa-chevron-down"></em>
             </button>
-            <div id="myDropdown" class="dropdown-content">
+            <div id="myDropdown" class="dropdown-content" aria-label="options à choisir">
               <a href="#main" id="optionPop" onclick="setValue(1)"
                 >Popularité</a
               >
@@ -37,7 +37,7 @@
             </div>
           </div>
 
-          <select aria-label="select" id="mySelect" style="display: none">
+          <select aria-label="select" id="mySelect" style="display: none" class="dropdown-select">
             <option value="1" selected>Popularité</option>
             <option value="2">Date</option>
             <option value="3">Titre</option>
@@ -47,24 +47,34 @@
       <div class="photograph-info"></div>
       <div class="photographer_main"></div>
     </main>
-    <div id="contact_modal">
+
+    
+   
+
+
+  
+    <div id="contact_modal" aria-label="modal contact photographe">
 			<div class="modal">
 				<header>
           <div class="modal-text"><h2>Contactez-moi</h2></div>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <img src="assets/icons/close.svg" onclick="closeModal()" alt="close contact modal button"/>
         </header>
 				<form>
 					<div class="form-elements">
-						<label for="first" id="first">Prénom</label>
-						<input />
+						<label for="first" id="first" class="first">Prénom</label>
+						<input/>
 					</div>
           <button class="contact_button">Envoyer</button>
 				</form>
 			</div>
 		</div>
+
+
     <script src="/scripts/templates/photographer.js"></script>
+    <script src="/scripts/utils/dropdown.js"></script>
     <script src="/scripts/templates/media.js"></script>
     <script src="/scripts/pages/photographer.js"></script>
+    <script src="/scripts/templates/lightbox.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
 </html>

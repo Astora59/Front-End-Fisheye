@@ -194,3 +194,8 @@ form input {
  background-color: #db8876;
 }
 
+.photographer-info {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
