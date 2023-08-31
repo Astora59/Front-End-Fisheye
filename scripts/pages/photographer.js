@@ -35,7 +35,6 @@ async function displayPhotographerHeader(photographers) {
 async function displayMedia(medias, photographerName, orderType = '1') {
   const containerMedias = document.querySelector('.photographer_main')
   containerMedias.innerHTML = ''
-  console.log(medias)
 
   switch (orderType) {
     case '1':
@@ -65,7 +64,6 @@ async function displayMedia(medias, photographerName, orderType = '1') {
 }
 
 async function displayLikeCounter(medias, price) {
-  // console.log(medias)
   const infoSection = document.querySelector('.photograph-info')
   const infoModel = infoFactory(medias, price)
   const userInfoDOM = infoModel.getUserInfoDOM()
@@ -86,7 +84,6 @@ async function init() {
   const dropdownSelect = document.querySelector('.dropdown-select')
   dropdownSelect.addEventListener('change', (e) => {
     const orderType = e.target.value
-    console.log(orderType)
     displayMedia(medias, photographers.name, orderType)
   })
 

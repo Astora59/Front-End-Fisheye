@@ -68,11 +68,11 @@ class LightBox {
    * @param {KeyBoardEvent} e
    */
   onKeyUp(e) {
-    if (e.key == 'Escape') {
+    if (e.key === 'Escape') {
       this.close(e)
-    } else if (e.key == 'ArrowLeft') {
+    } else if (e.key === 'ArrowLeft') {
       this.prev(e)
-    } else if (e.key == 'ArrowRight') {
+    } else if (e.key === 'ArrowRight') {
       this.next(e)
     }
   }
@@ -100,9 +100,9 @@ class LightBox {
    */
   next(e) {
     e.preventDefault()
-    let i = this.images.findIndex((image) => image == this.url)
+    let i = this.images.findIndex((image) => image === this.url)
 
-    if (i == this.images.length - 1) {
+    if (i === this.images.length - 1) {
       i = -1
     }
 
@@ -115,8 +115,8 @@ class LightBox {
    */
   prev(e) {
     e.preventDefault()
-    let i = this.images.findIndex((image) => image == this.url)
-    if (i == 0) {
+    let i = this.images.findIndex((image) => image === this.url)
+    if (i === 0) {
       i = this.images.length
     }
     this.loadImage(this.images[i - 1])
