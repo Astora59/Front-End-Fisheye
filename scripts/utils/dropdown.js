@@ -1,6 +1,5 @@
 const dropdown = document.getElementById('myDropdown')
 const btn = document.querySelector('.dropbtn')
-const optionList = dropdown.querySelectorAll('a')
 const select = document.querySelector('select')
 const chevron = document.createElement('i')
 chevron.setAttribute('class', 'fa-solid fa-chevron-down')
@@ -50,10 +49,32 @@ function setValue(e) {
 }
 
 // display dropdown
-function showDropdown() {
+btn.addEventListener('click', () => {
   dropdown.classList.toggle('show')
   chevron.classList.remove('fa-chevron-down')
   chevron.classList.add('fa-chevron-up')
+})
+
+async function initOptionDropdown() {
+  const optionDropDown = document.querySelectorAll('.option-dropdown')
+  optionDropDown.forEach((option) => {
+    option.addEventListener('click', (e) => {
+      e.preventDefault()
+      const valueOption = e.target.textContent
+      switch (valueOption) {
+        case 'Date':
+          setValue(2)
+          break
+        case 'Popularité':
+          setValue(1)
+          break
+        case 'Titre':
+          setValue(3)
+          break
+        default:
+      }
+    })
+  })
 }
 
 // Close the dropdown menu if the user clicks outside of it
@@ -70,3 +91,5 @@ window.onclick = (event) => {
     }
   }
 }
+
+initOptionDropdown()

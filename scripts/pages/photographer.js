@@ -1,17 +1,21 @@
 async function getPhotographersPageData(id) {
-  const dataPhotographers = await fetch("/data/photographers.json");
-  const infoProfilePhotographers = await dataPhotographers.json();
-  const infoProfilePhotograph = infoProfilePhotographers.photographers.find((value) => value.id == id);
+  const dataPhotographers = await fetch('/data/photographers.json')
+  const infoProfilePhotographers = await dataPhotographers.json()
+  const infoProfilePhotograph = infoProfilePhotographers.photographers.find(
+    (value) => value.id == id,
+  )
 
-  return infoProfilePhotograph;
+  return infoProfilePhotograph
 }
 
 async function getMediaData(id) {
-  const mediaDataPhotographers = await fetch("/data/photographers.json")
-  const infoMedia = await mediaDataPhotographers.json();
-  const mediasForPhotographer = infoMedia.media.filter((value) => value.photographerId == id);
+  const mediaDataPhotographers = await fetch('/data/photographers.json')
+  const infoMedia = await mediaDataPhotographers.json()
+  const mediasForPhotographer = infoMedia.media.filter(
+    (value) => value.photographerId == id,
+  )
 
-  return mediasForPhotographer;
+  return mediasForPhotographer
 }
 
 async function getLikes(medias) {
@@ -21,30 +25,23 @@ async function getLikes(medias) {
   return likesCount
 }
 
- 
-
-
 async function displayPhotographerHeader(photographers) {
-  let tabIndex = 2;
-  const photographerModel = photographerTemplate(photographers, tabIndex);
-  await photographerModel.getProfilePhotographer();
-  await photographerModel.modalCreation();
+  const tabIndex = 2
+  const photographerModel = photographerTemplate(photographers, tabIndex)
+  await photographerModel.getProfilePhotographer()
+  await photographerModel.modalCreation()
 }
 
-
-
-
-
- async function displayMedia(medias, photographerName, orderType = 'popularite') {
-   const containerMedias = document.querySelector('.photographer_main')
-  containerMedias.innerHTML = "";
+async function displayMedia(medias, photographerName, orderType = '1') {
+  const containerMedias = document.querySelector('.photographer_main')
+  containerMedias.innerHTML = ''
   console.log(medias)
 
   switch (orderType) {
-    case "popularite":
+    case '1':
       medias.sort((a, b) => (a.likes < b.likes ? 1 : -1))
-      break; 
-    case "date":
+      break
+    case '2':
       medias.sort((x, y) => {
         const firstDate = new Date(x.date)
         const SecondDate = new Date(y.date)
@@ -53,73 +50,53 @@ async function displayPhotographerHeader(photographers) {
         if (firstDate > SecondDate) return 1
         return 0
       })
-      break;
-    
-    case "title" :
+      break
+
+    case '3':
       medias.sort((a, b) => a.title.localeCompare(b.title))
-      break;
+      break
   }
 
+  medias.forEach(async (media) => {
+    const photographerMediaModel = mediaFactory(media, photographerName)
+    const mediaDOM = await photographerMediaModel.getMediaCardDOM()
+    containerMedias.appendChild(mediaDOM)
+  })
+}
 
-
-   medias.forEach(async (media) => {
-     const photographerMediaModel = mediaFactory(media, photographerName);
-     const mediaDOM = await photographerMediaModel.getMediaCardDOM();
-     containerMedias.appendChild(mediaDOM)
-
-  });
-
-  
-
-
-  
- }
-
- 
-
- async function displayLikeCounter(medias, price) {
-  //console.log(medias)
+async function displayLikeCounter(medias, price) {
+  // console.log(medias)
   const infoSection = document.querySelector('.photograph-info')
   const infoModel = infoFactory(medias, price)
   const userInfoDOM = infoModel.getUserInfoDOM()
   infoSection.appendChild(userInfoDOM)
 }
 
-
-
-
- 
-
-
 async function init() {
   // Récupère les datas des photographes
-  let url = new URL(window.location.href);
-  let searchParams = new URLSearchParams(url.search);
-  let id = searchParams.get("id");
-  const photographers = await getPhotographersPageData(id);
+  const url = new URL(window.location.href)
+  const searchParams = new URLSearchParams(url.search)
+  const id = searchParams.get('id')
+  const photographers = await getPhotographersPageData(id)
   const medias = await getMediaData(id)
   const likesCount = await getLikes(medias)
-  displayPhotographerHeader(photographers);
+  displayPhotographerHeader(photographers)
   displayMedia(medias, photographers.name)
-  //add event listener sort
-  const dropdownSelect = document.querySelector(".dropdown-select")
-  dropdownSelect.addEventListener("change", (e) => {
-    displayMedia(medias, photographers.name, orderType = "date")
-    
+  // add event listener sort
+  const dropdownSelect = document.querySelector('.dropdown-select')
+  dropdownSelect.addEventListener('change', (e) => {
+    const orderType = e.target.value
+    console.log(orderType)
+    displayMedia(medias, photographers.name, orderType)
   })
 
   displayLikeCounter(likesCount, photographers.price)
 }
 
-init();
+init()
 
-
-
-// //logique de validation modal 
+// //logique de validation modal
 
 // const lengthValidator = (string, length) => {
 //   return string.length > length;
 // }
-
-
-

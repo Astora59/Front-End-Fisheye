@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/photographer.css" rel="stylesheet" type="text/css" />
@@ -25,19 +25,19 @@
         <span>Trier par :</span>
         <div class="select">
           <div class="dropdown">
-            <button onclick="showDropdown()" class="dropbtn">
+            <button class="dropbtn">
               <em class="fa-solid fa-chevron-down"></em>
             </button>
             <div id="myDropdown" class="dropdown-content" aria-label="options à choisir">
-              <a href="#main" id="optionPop" onclick="setValue(1)"
+              <a href="#main" id="optionPop" class="option-dropdown"
                 >Popularité</a
               >
-              <a href="#main" id="optionDat" onclick="setValue(2)">Date</a>
-              <a href="#main" id="optionTit" onclick="setValue(3)">Titre</a>
+              <a href="#main" id="optionDat" class="option-dropdown">Date</a>
+              <a href="#main" id="optionTit" class="option-dropdown">Titre</a>
             </div>
           </div>
 
-          <select aria-label="select" id="mySelect" style="display: none" class="dropdown-select">
+          <select aria-label="select" id="mySelect" style="display: none" class="dropdown-select" title="select">
             <option value="1" selected>Popularité</option>
             <option value="2">Date</option>
             <option value="3">Titre</option>
@@ -61,20 +61,19 @@
         </header>
 				<form>
 					<div class="form-elements">
-						<label for="first" id="first" class="first">Prénom</label>
-						<input/>
+						<label for="firstname" id="first" class="first">Prénom</label>
+						<input type="text" id="firstname" name="firstname"/>
 					</div>
           <button class="contact_button">Envoyer</button>
 				</form>
 			</div>
 		</div>
 
-
+    <script src="/scripts/templates/lightbox.js"></script>
     <script src="/scripts/templates/photographer.js"></script>
     <script src="/scripts/utils/dropdown.js"></script>
     <script src="/scripts/templates/media.js"></script>
     <script src="/scripts/pages/photographer.js"></script>
-    <script src="/scripts/templates/lightbox.js"></script>
     <script src="/scripts/utils/contactForm.js"></script>
   </body>
 </html>
