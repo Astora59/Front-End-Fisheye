@@ -61,6 +61,7 @@ async function displayMedia(medias, photographerName, orderType = '1') {
     const mediaDOM = await photographerMediaModel.getMediaCardDOM()
     containerMedias.appendChild(mediaDOM)
   })
+  LightBox.init()
 }
 
 async function displayLikeCounter(medias, price) {
