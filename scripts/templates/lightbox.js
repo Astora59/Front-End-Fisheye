@@ -170,4 +170,4 @@ class LightBox {
   }
 }
 
-LightBox.init()
+
