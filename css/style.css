@@ -85,6 +85,7 @@ h1 {
 }
 
 article {
+  justify-self: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,11 +93,7 @@ article {
 }
 
 .photographer_section article {
-    justify-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+   
 }
 
 .photographer_section article h2 {
