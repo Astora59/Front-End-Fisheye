@@ -22,6 +22,9 @@ function mediaFactory(data, name) {
       linkForLightbox.setAttribute('href', imgSrc)
       linkForLightbox.appendChild(img)
     }
+   
+
+
     if (video) {
       const vdo = document.createElement('video')
       vdo.setAttribute('src', vdoSrc)
@@ -51,6 +54,28 @@ function mediaFactory(data, name) {
     heart.setAttribute('class', 'far fa-heart')
     heart.setAttribute('tabIndex', '0')
     // like handler
+    heart.addEventListener('keydown', () => {
+      if (p.classList.contains('liked')) {
+        p.classList.remove('liked')
+        heart.classList.remove('liked')
+        heart.classList.remove('fa-solid')
+
+        p.innerHTML = likes
+      } else {
+        p.classList.add('liked')
+        heart.classList.add('liked')
+        p.innerHTML = likes + 1
+        heart.classList.add('fa-solid')
+      }
+      const allLikes = document.querySelectorAll('.likes')
+      let newTotalLikes = 0
+      allLikes.forEach((i) => {
+        newTotalLikes += parseInt(i.textContent)
+      })
+      const elementTotalLike = document.querySelector('.photographer-info > p')
+      elementTotalLike.innerHTML = `${newTotalLikes}<i class="fa-solid fa-heart"></i>`
+    })
+
     heart.addEventListener('click', () => {
       if (p.classList.contains('liked')) {
         p.classList.remove('liked')
@@ -72,8 +97,11 @@ function mediaFactory(data, name) {
       const elementTotalLike = document.querySelector('.photographer-info > p')
       elementTotalLike.innerHTML = `${newTotalLikes}<i class="fa-solid fa-heart"></i>`
     })
+
+
     // like handler keyboard controle
     heart.addEventListener('keypress', (e) => {
+      if (e.key === "enter") {
       switch (e.key) {
         case 'Enter':
           if (p.classList.contains('liked')) {
@@ -89,7 +117,7 @@ function mediaFactory(data, name) {
 
         default:
           e.preventDefault()
-      }
+      }}
     })
 
     card.appendChild(cardFooter)
