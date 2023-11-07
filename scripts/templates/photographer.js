@@ -121,7 +121,7 @@ function photographerTemplate(data, tabIndex) {
     picture,
     getUserCardDOM,
     getProfilePhotographer,
-    modalCreation,
+    modalCreation 
   }
 }
 

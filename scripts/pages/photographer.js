@@ -30,6 +30,16 @@ async function displayPhotographerHeader(photographers) {
   const photographerModel = photographerTemplate(photographers, tabIndex)
   await photographerModel.getProfilePhotographer()
   await photographerModel.modalCreation()
+  const sendButton = document.querySelector('.contact_button')
+  const form = document.querySelector('#form')
+  
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    console.log(firstname.value)
+    console.log(last.value)
+    console.log(email.value)
+    console.log(message.value)
+  })
 }
 
 async function displayMedia(medias, photographerName, orderType = '1') {
@@ -80,6 +90,7 @@ async function init() {
   const medias = await getMediaData(id)
   const likesCount = await getLikes(medias)
   displayPhotographerHeader(photographers)
+  console.log(photographers)
   displayMedia(medias, photographers.name)
   // add event listener sort
   const dropdownSelect = document.querySelector('.dropdown-select')
